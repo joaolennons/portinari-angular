@@ -399,7 +399,7 @@ describe('PoChartCircular:', () => {
     });
 
     it('createSVGElements: should create svgElement and call `createPaths`, append svgElement in svgContainer and setAttributes', () => {
-
+      component.series = [{ category: 'po', value: 1 }];
       spyOn(component, <any> 'createPaths');
       spyOn(component['renderer'], <any> 'createElement').and.callThrough();
       spyOn(component['renderer'], <any> 'setAttribute');
@@ -412,6 +412,17 @@ describe('PoChartCircular:', () => {
       expect(component['renderer'].createElement).toHaveBeenCalledWith('svg:svg', 'svg');
       expect(component['renderer'].setAttribute).toHaveBeenCalledTimes(5);
       expect(component['svgContainer'].nativeElement.appendChild).toHaveBeenCalledWith(component.svgElement);
+    });
+
+    it('createSVGElements: shouldn`t call `createPaths` and `createTexts`', () => {
+      component.series = [{ category: 'po', value: 0 }];
+      spyOn(component, <any> 'createPaths');
+      spyOn(component, <any> 'createTexts');
+
+      component['createSVGElements']();
+
+      expect(component['createPaths']).not.toHaveBeenCalled();
+      expect(component['createTexts']).not.toHaveBeenCalled();
     });
 
     it('setEventListeners: should call `renderer.listen` ten times and set `windowResizeListener`', () => {
@@ -661,9 +672,35 @@ describe('PoChartCircular:', () => {
 
       expect(component['renderer'].createElement).toHaveBeenCalledTimes(2);
       expect(component['renderer'].setAttribute).toHaveBeenCalledTimes(4);
-      expect(component['renderer'].appendChild).toHaveBeenCalledTimes(1);
+      expect(component['renderer'].appendChild).toHaveBeenCalledTimes(2);
 
       expect(component['svgTextElementsList'].length).toEqual(1);
+    });
+
+    it('createText: should call `appendChild` two times if `serie.value` is different from `zero`', () => {
+      const index = 0;
+      const serie: PoDonutChartSeries = { category: 'po', value: 1 };
+
+      component.colors = PoChartColors[0];
+
+      spyOn(component['renderer'], 'appendChild');
+
+      component['createText'](index, serie);
+
+      expect(component['renderer'].appendChild).toHaveBeenCalledTimes(2);
+    });
+
+    it('createText: should call `appendChild` one time if `serie.value` is equal to `zero`', () => {
+      const index = 0;
+      const serie: PoDonutChartSeries = { category: 'po', value: 0 };
+
+      component.colors = PoChartColors[0];
+
+      spyOn(component['renderer'], 'appendChild');
+
+      component['createText'](index, serie);
+
+      expect(component['renderer'].appendChild).toHaveBeenCalledTimes(1);
     });
 
     it('setTextProperties: shouldn`t call `text.setAttribute` if `type` is pie', () => {

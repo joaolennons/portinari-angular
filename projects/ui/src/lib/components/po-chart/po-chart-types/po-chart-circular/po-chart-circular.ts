@@ -137,7 +137,7 @@ export class PoChartCircular extends PoChartDynamicTypeComponent implements OnDe
     this.setTooltipAttributes(svgText, serie);
 
     if (value !== 0) {
-      svgG.appendChild(svgText);
+      this.renderer.appendChild(svgG, svgText);
     }
     this.renderer.appendChild(this.svgElement, svgG);
     this.svgTextElementsList.push(svgText);

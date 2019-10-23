@@ -17,23 +17,19 @@ const poChartTypeDefault = PoChartType.Pie;
  * O `po-chart` é um componente para renderização de dados através de gráficos, com isso facilitando a compreensão e tornando a
  * visualização destes dados mais agradável.
  *
- * Este componente também possibilita a definição das seguintes propriedades:
- *  - altura
- *  - series
- *  - tipo
- *  - título
+ * Através de suaas principais propriedades é possível definir do tipo de gráfico, uma altura e um título.
  *
- * Além das definições de propriedades, também é possível definir uma ação que será executada ao clicar em determinado elemento do gráfico
+ * Além disso, também é possível definir uma ação que será executada ao clicar em determinado elemento do gráfico
  * e outra que será executada ao passar o *mouse* sobre o elemento.
  *
  * #### Boas práticas
  *
  * - Para que o gráfico não fique ilegível e incompreensível, evite uma quantia excessiva de séries.
- *
+ * - Para exibir a intensidade de um único dado dê preferência ao tipo `gauge`.
  */
 export abstract class PoChartBaseComponent {
 
-  private _height?: number = poChartDefaultHeight;
+  private _height: number;
   private _series: Array<PoDonutChartSeries | PoPieChartSeries | PoChartGaugeSerie>;
   private _type: PoChartType = poChartTypeDefault;
 
@@ -57,7 +53,7 @@ export abstract class PoChartBaseComponent {
     if (isTypeof(value, 'number')) {
       height = intValue <= poChartMinHeight ? poChartMinHeight : intValue;
     } else {
-      height = poChartDefaultHeight;
+      height = this.setDefaultHeight();
     }
 
     this._height = height;
@@ -89,8 +85,6 @@ export abstract class PoChartBaseComponent {
   get series() {
     return this._series;
   }
-
-
 
   /** Define o título do gráfico. */
   @Input('p-title') title?: string;
@@ -138,6 +132,10 @@ export abstract class PoChartBaseComponent {
 
   onSeriesHover(event: any): void {
     this.seriesHover.emit(event);
+  }
+
+  setDefaultHeight() {
+    return this.type === PoChartType.Gauge ? poChartMinHeight : poChartDefaultHeight;
   }
 
   abstract rebuildComponent(): void;

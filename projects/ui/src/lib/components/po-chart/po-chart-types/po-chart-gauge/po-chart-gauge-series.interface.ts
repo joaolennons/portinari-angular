@@ -6,17 +6,15 @@ import { PoCircularChartSeries } from '../po-chart-circular/po-chart-circular-se
  * @description
  *
  * Interface que define o objeto da série `PoChartType.Gauge`.
- *
- * @docsExtends PoCircularChartSeries
  */
-export interface PoChartGaugeSerie extends PoCircularChartSeries {
+export interface PoChartGaugeSerie {
 
   /**
    * @optional
    *
    * @description
    *
-   * Define o texto que será exibido na área interna do *chart*.
+   * Define o texto que será exibido na área interna e centralizado ao gráfico.
    */
   description?: string;
 
@@ -25,8 +23,13 @@ export interface PoChartGaugeSerie extends PoCircularChartSeries {
    *
    * @description
    *
-   * Define o texto que será exibido ao passar o mouse por cima das séries do *chart*.
+   * Define o texto que será exibido ao passar o *mouse* sobre o gráfico.
+   *
+   * > Caso não seja informado um valor para o *tooltip*, será exibido o valor contido em `description`.
    */
   tooltip?: string;
+
+  /** Define o valor do objeto. */
+  value: number;
 
 }

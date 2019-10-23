@@ -93,6 +93,9 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
   }
 
   ngOnInit() {
+    // Tratamento necessário que define altura default para gráfico do tipo gauge.
+    this.height = this.setDefaultHeight();
+
     this.getSeriesColor();
   }
 

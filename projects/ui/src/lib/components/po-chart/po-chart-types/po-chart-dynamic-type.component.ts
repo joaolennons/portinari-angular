@@ -48,4 +48,11 @@ export abstract class PoChartDynamicTypeComponent {
     this.totalValue = this.type === PoChartType.Gauge ? 100 : this.series.reduce((previousValue, serie) => previousValue + serie.value, 0);
   }
 
+  gaugeTextMaxWidthSet() {
+    // Medida do diâmetro - padding necessário nas laterais
+    const width = this.svgHeight * 2 - 64;
+
+    return { 'width': `${width}px` };
+  }
+
 }

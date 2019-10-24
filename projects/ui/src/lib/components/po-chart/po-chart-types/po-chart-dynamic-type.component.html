@@ -12,8 +12,10 @@
 </div>
 
 <ng-template #gaugeTextContent>
-  <div class="po-chart-gauge-text-content">
-    <p class="po-chart-gauge-text-value">{{ series[0].value}}%</p>
-    <p class="po-chart-gauge-text-description">descrição</p>
+  <div class="po-chart-gauge-text-content" 
+    [ngStyle]="gaugeTextMaxWidthSet()"
+    tabindex="1">
+    <p class="po-chart-gauge-text-value">{{ series[0]?.value}}%</p>
+    <p *ngIf="series[0].description" class="po-chart-gauge-text-description">{{ series[0]?.description }}</p>
   </div>
 </ng-template>

@@ -38,6 +38,7 @@ import { PoChartType } from './enums/po-chart-type.enum';
 export class PoChartComponent extends PoChartBaseComponent implements AfterViewInit, DoCheck, OnDestroy, OnInit {
 
   private calculatedElement: boolean = false;
+  private chartLegendContent: ElementRef;
   private componentRef: ComponentRef<{}>;
   private differ: any;
   private initialized: boolean = false;
@@ -55,7 +56,11 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
   chartContainer: ViewContainerRef;
 
   @ViewChild('chartHeader', { static: true }) chartHeader: ElementRef;
-  @ViewChild('chartLegend', { static: true }) chartLegend: ElementRef;
+
+  @ViewChild('chartLegend', { static: false }) set chartLegend(content: ElementRef) {
+    this.chartLegendContent = content;
+  }
+
   @ViewChild('chartWrapper', { static: true }) chartWrapper: ElementRef;
 
   @HostListener('window:resize')
@@ -175,7 +180,7 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
 
   private setChartProperties(instance: PoChartDynamicTypeComponent) {
     instance.chartHeader = this.chartHeader.nativeElement.offsetHeight;
-    instance.chartLegend = this.chartLegend.nativeElement.offsetHeight;
+    instance.chartLegend = this.chartLegendContent ? this.chartLegendContent.nativeElement.offsetHeight : 0;
     instance.chartWrapper = this.chartWrapper.nativeElement.offsetWidth;
     instance.colors = this.colors;
     instance.height = this.height;
@@ -198,7 +203,7 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
   private setResizeListenerSubscribe(instance: PoChartDynamicTypeComponent) {
     this.windowResizeListener.subscribe(() => {
       instance.chartHeader = this.chartHeader.nativeElement.offsetHeight;
-      instance.chartLegend = this.chartLegend.nativeElement.offsetHeight;
+      instance.chartLegend = this.chartLegendContent ? this.chartLegendContent.nativeElement.offsetHeight : 0;
       instance.chartWrapper = this.chartWrapper.nativeElement.offsetWidth;
     });
   }

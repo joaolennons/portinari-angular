@@ -6,7 +6,7 @@ import {
   poChartGaugeOffsetStroke,
   poChartGaugeStartAngle,
   poChartPadding,
-  poChartStartAngle
+  poChartStartAngle,
 } from './po-chart-circular.constant';
 import { PoChartDynamicTypeComponent } from '../po-chart-dynamic-type.component';
 import { PoChartType } from '../../enums/po-chart-type.enum';
@@ -167,17 +167,15 @@ export class PoChartCircular extends PoChartDynamicTypeComponent implements OnDe
     this.renderer.appendChild(this.svgElement, svgG);
     this.svgTextElementsList.push(svgText);
   }
-
+  
   private createTexts() {
     if (this.type === PoChartType.Donut) {
       this.series.forEach((serie, index) => this.createText(serie, index));
-    } else if (this.chartGaugeType) {
-      // this.createText(this.series[0]);
     }
   }
 
   private createSVGElements() {
-    const viewBoxHeight = this.chartGaugeType ? this.centerX + poChartGaugeOffsetStroke : this.chartWrapper;
+    const viewBoxHeight = this.chartGaugeType ? this.centerX + poChartPadding : this.chartWrapper;
     const viewBoxWidth = this.chartGaugeType ? this.chartWrapper + poChartGaugeOffsetStroke : this.chartWrapper;
 
     this.svgElement = this.renderer.createElement('svg:svg', 'svg');

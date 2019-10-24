@@ -111,6 +111,10 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
     }
   }
 
+  private chartLegendHeight(chartLegend: ElementRef) {
+    return chartLegend ? this.chartLegendContent.nativeElement.offsetHeight : 0;
+  }
+
   private checkingForSerieChanges() {
     if (this.componentRef && this.differ) {
       const changeSeries = this.differ.diff(this.series);
@@ -180,7 +184,7 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
 
   private setChartProperties(instance: PoChartDynamicTypeComponent) {
     instance.chartHeader = this.chartHeader.nativeElement.offsetHeight;
-    instance.chartLegend = this.chartLegendContent ? this.chartLegendContent.nativeElement.offsetHeight : 0;
+    instance.chartLegend = this.chartLegendHeight(this.chartLegendContent);
     instance.chartWrapper = this.chartWrapper.nativeElement.offsetWidth;
     instance.colors = this.colors;
     instance.height = this.height;
@@ -203,7 +207,7 @@ export class PoChartComponent extends PoChartBaseComponent implements AfterViewI
   private setResizeListenerSubscribe(instance: PoChartDynamicTypeComponent) {
     this.windowResizeListener.subscribe(() => {
       instance.chartHeader = this.chartHeader.nativeElement.offsetHeight;
-      instance.chartLegend = this.chartLegendContent ? this.chartLegendContent.nativeElement.offsetHeight : 0;
+      instance.chartLegend = this.chartLegendHeight(this.chartLegendContent);
       instance.chartWrapper = this.chartWrapper.nativeElement.offsetWidth;
     });
   }

@@ -223,6 +223,18 @@ export interface PoTableColumn {
   type?: string;
 
   /**
+   * @optional
+   *
+   * @description
+   *
+   * Controla a exibição da coluna. Caso informar o valor falso, a coluna não será exibida por padrão
+   * e ficará disponível para torná-la visível no gerenciador de coluna.
+   *
+   * @default `true`
+   */
+  visible?: boolean;
+
+  /**
    * A largura da coluna pode ser informada em pixels ou porcentagem.
    * > Exemplo: '100px' ou '20%'.
    */
